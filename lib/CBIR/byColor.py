@@ -35,19 +35,18 @@ def RGBtoHSV(image):
     S = np.zeros_like(image[:,:,0], dtype=float)
     V = Cmax
 
+    # # Menghitung H
+    # R, G, B = cv2.split(normalized)
 
-    # Menghitung H
-    R, G, B = cv2.split(normalized)
+    # cond = np.logical_and(delta != 0, Cmax == R)
+    # H[cond] = 60 * (((G - B) / delta % 6))[cond]
+    # cond = np.logical_and(delta != 0, Cmax == G)
+    # H[cond] = (60 * ((B - R) / delta + 2))[cond]
+    # cond = np.logical_and(delta != 0, Cmax == B)
+    # H[cond] = (60 * ((R - G) / delta + 4))[cond]
 
-    cond = np.logical_and(delta != 0, Cmax == R)
-    H[cond] = 60 * (((G - B) / delta % 6))[cond]
-    cond = np.logical_and(delta != 0, Cmax == G)
-    H[cond] = (60 * ((B - R) / delta + 2))[cond]
-    cond = np.logical_and(delta != 0, Cmax == B)
-    H[cond] = (60 * ((R - G) / delta + 4))[cond]
-
-    # Menghitung S
-    S[Cmax != 0] = delta[Cmax != 0] / Cmax[Cmax != 0]
+    # # Menghitung S
+    # S[Cmax != 0] = delta[Cmax != 0] / Cmax[Cmax != 0]
 
     print(H)
     print(S)
