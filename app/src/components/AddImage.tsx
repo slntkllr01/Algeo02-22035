@@ -1,59 +1,56 @@
-// src/ImageSection.js
-// import React, { useState } from 'react';
+// import dummypic from "../assets/pic.png"
 
 function AddImage() {
-//   const [selectedOption, setSelectedOption] = useState('texture'); // Default to 'texture'
-
-//   const handleOptionChange = (option) => {
-//     setSelectedOption(option);
-//   };
-
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
-      {/* Left side */}
-      <div className="w-full md:w-1/2">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+    <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
+
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center m-4">
+        {/* Display image area (you can add your display logic here) */}
+        <div className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center">
+          <img src={require("../assets/pic.png")} alt="dummy"/>
+          {/* Display images or other content here */}
+        </div>
+        <div>
+          <p className="text-sm pt-2">dummy.jpg</p>
+        </div>
+      </div>
+
+      <div className="m-4">
+        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
           Insert Image
         </button>
+      </div>
 
-        <div className="mt-4">
-          <label className="mr-2">Toggle by:</label>
-          <div className="inline-flex items-center">
-            <input
-              type="radio"
-              id="colorOption"
-              name="toggleOption"
-              value="color"
-            //   checked={selectedOption === 'color'}
-            //   onChange={() => handleOptionChange('color')}
-              className="mr-2"
-            />
-            <label htmlFor="colorOption" className="mr-4">Color</label>
+      <div className="m-4">
+        <div className="flex flex-row gap-2 m-4 items-center">
+          <label>
+            Texture
+          </label>
 
-            <input
-              type="radio"
-              id="textureOption"
-              name="toggleOption"
-              value="texture"
-            //   checked={selectedOption === 'texture'}
-            //   onChange={() => handleOptionChange('texture')}
-            />
-            <label htmlFor="textureOption">Texture</label>
-          </div>
+          <label htmlFor="check" className="bg-gray-300 cursor-pointer relative w-20 h-10 rounded-full">
+            <input type="checkbox" id="check" className="sr-only peer" />
+            <span className="w-2/5 h-4/5 bg-blue-300 absolute rounded-full left-1 top-1
+            peer-checked:bg-blue-500 peer-checked:left-11 transition-all duration-500"></span>
+          </label>
+
+          <label>
+            Color
+          </label>
         </div>
-
-        <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600">
+      </div>
+      
+      <div className="m-4">
+        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
           Search
         </button>
       </div>
-
-      {/* Right side */}
-      <div className="w-full md:w-1/2">
-        {/* Display image area (you can add your display logic here) */}
-        <div className="border border-gray-300 h-64 w-full bg-gray-100 rounded-lg">
-          {/* Display images or other content here */}
-        </div>
+      
+      <div className="m-4">
+        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
+          Upload Dataset
+        </button>
       </div>
+
     </div>
   );
 }
