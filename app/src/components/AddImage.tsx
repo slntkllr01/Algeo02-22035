@@ -1,12 +1,12 @@
 // src/ImageSection.js
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
 function AddImage() {
-  const [selectedOption, setSelectedOption] = useState('texture'); // Default to 'texture'
+//   const [selectedOption, setSelectedOption] = useState('texture'); // Default to 'texture'
 
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  };
+//   const handleOptionChange = (option) => {
+//     setSelectedOption(option);
+//   };
 
   return (
     <div className="flex flex-col md:flex-row justify-center items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
@@ -24,8 +24,8 @@ function AddImage() {
               id="colorOption"
               name="toggleOption"
               value="color"
-              checked={selectedOption === 'color'}
-              onChange={() => handleOptionChange('color')}
+            //   checked={selectedOption === 'color'}
+            //   onChange={() => handleOptionChange('color')}
               className="mr-2"
             />
             <label htmlFor="colorOption" className="mr-4">Color</label>
@@ -35,8 +35,8 @@ function AddImage() {
               id="textureOption"
               name="toggleOption"
               value="texture"
-              checked={selectedOption === 'texture'}
-              onChange={() => handleOptionChange('texture')}
+            //   checked={selectedOption === 'texture'}
+            //   onChange={() => handleOptionChange('texture')}
             />
             <label htmlFor="textureOption">Texture</label>
           </div>
