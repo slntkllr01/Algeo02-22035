@@ -17,10 +17,6 @@ def cosine_similarity(v1, v2):
     cosine_similarity = dot_product / (norm_v1 * norm_v2)
     return cosine_similarity
 
-
-import cv2
-import numpy as np
-
 def RGBtoHSV(image):
     img = cv2.imread('C:\\Users\\raffa\\OneDrive\\Dokumen\\GitHub\\Algeo02-22035\\lib\\CBIR\\0.jpg')
     # Normalisasi RGB
