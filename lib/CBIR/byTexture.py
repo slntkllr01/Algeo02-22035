@@ -20,101 +20,40 @@ def quantifyGrayscale(vektorGrayscale):
     vektorQuantized = []
     for i in range(0, len(vektorGrayscale)):
         vektorQuantized.append(vektorGrayscale[i]//8)
-        # if vektorGrayscale[i] < 8:
-        #     vektorQuantized.append(0)
-        # elif vektorGrayscale[i] < 16:
-        #     vektorQuantized.append(1)
-        # elif vektorGrayscale[i] < 24:
-        #     vektorQuantized.append(2)
-        # elif vektorGrayscale[i] < 32:
-        #     vektorQuantized.append(3)
-        # elif vektorGrayscale[i] < 40:
-        #     vektorQuantized.append(4)
-        # elif vektorGrayscale[i] < 48:
-        #     vektorQuantized.append(5)
-        # elif vektorGrayscale[i] < 56:
-        #     vektorQuantized.append(6)
-        # elif vektorGrayscale[i] < 64:
-        #     vektorQuantized.append(7)
-        # elif vektorGrayscale[i] < 72:
-        #     vektorQuantized.append(8)
-        # elif vektorGrayscale[i] < 80:
-        #     vektorQuantized.append(9)
-        # elif vektorGrayscale[i] < 88:
-        #     vektorQuantized.append(10)
-        # elif vektorGrayscale[i] < 96:
-        #     vektorQuantized.append(11)
-        # elif vektorGrayscale[i] < 104:
-        #     vektorQuantized.append(12)
-        # elif vektorGrayscale[i] < 112:
-        #     vektorQuantized.append(13)
-        # elif vektorGrayscale[i] < 120:
-        #     vektorQuantized.append(14)
-        # elif vektorGrayscale[i] < 128:
-        #     vektorQuantized.append(15)
-        # elif vektorGrayscale[i] < 136:
-        #     vektorQuantized.append(16)
-        # elif vektorGrayscale[i] < 144:
-        #     vektorQuantized.append(17)
-        # elif vektorGrayscale[i] < 152:
-        #     vektorQuantized.append(18)
-        # elif vektorGrayscale[i] < 160:
-        #     vektorQuantized.append(19)
-        # elif vektorGrayscale[i] < 168:
-        #     vektorQuantized.append(20)
-        # elif vektorGrayscale[i] < 176:
-        #     vektorQuantized.append(21)
-        # elif vektorGrayscale[i] < 184:
-        #     vektorQuantized.append(22)
-        # elif vektorGrayscale[i] < 192:
-        #     vektorQuantized.append(23)
-        # elif vektorGrayscale[i] < 200:
-        #     vektorQuantized.append(24)
-        # elif vektorGrayscale[i] < 208:
-        #     vektorQuantized.append(25)
-        # elif vektorGrayscale[i] < 216:
-        #     vektorQuantized.append(26)
-        # elif vektorGrayscale[i] < 224:
-        #     vektorQuantized.append(27)
-        # elif vektorGrayscale[i] < 232:
-        #     vektorQuantized.append(28)
-        # elif vektorGrayscale[i] < 240:
-        #     vektorQuantized.append(29)
-        # elif vektorGrayscale[i] < 248:
-        #     vektorQuantized.append(30)
-        # elif vektorGrayscale[i] < 256:
-        #     vektorQuantized.append(31)
     return vektorQuantized
 
 def buildCoOccurenceMatrixA(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 0 derajat"""
     CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
-    for i in range(512):
-        for j in range(511):
+    length = len(vektorQuantized)
+    for i in range(length):
+        for j in range(length-1):
             CoOccurenceMatrix[vektorQuantized[i][j]][vektorQuantized[i][j+1]] += 1
     return CoOccurenceMatrix
 
 def buildCoOccurenceMatrixB(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 90 derajat"""
     CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
-    for i in range(511):
-        for j in range(512):
+    length = len(vektorQuantized)
+    for i in range(length-1):
+        for j in range(length):
             CoOccurenceMatrix[vektorQuantized[i][j]][vektorQuantized[i+1][j]] += 1
     return CoOccurenceMatrix
 
 def buildCoOccurenceMatrixC(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 45 derajat"""
     CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
-    for i in range(1, 512):
-        for j in range(511):
+    length = len(vektorQuantized)
+    for i in range(1, length):
+        for j in range(length-1):
             CoOccurenceMatrix[vektorQuantized[i][j]][vektorQuantized[i-1][j+1]] += 1
     return CoOccurenceMatrix
 
 def buildCoOccurenceMatrixD(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 135 derajat"""
     CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
-    for i in range(1, 512):
-        for j in range(1, 512):
+    for i in range(1, length):
+        for j in range(1, length):
             CoOccurenceMatrix[vektorQuantized[i][j]][vektorQuantized[i-1][j-1]] += 1
     return CoOccurenceMatrix
     
@@ -223,9 +162,31 @@ def getTextureFeatures(ImageMatrix):
     energyData = [getEnergy(GLCM1A), getEnergy(GLCM1B), getEnergy(GLCM1C), getEnergy(GLCM1D)]
     entropyData = [getEntropy(GLCM1A), getEntropy(GLCM1B), getEntropy(GLCM1C), getEntropy(GLCM1D)]
     collerationData = [getColleration(GLCM1A), getColleration(GLCM1B), getColleration(GLCM1C), getColleration(GLCM1D)]
-    
-    return [contrast, dissimilarity, homogeneity, ASM, energy, entropy, colleration]
 
+    contrast = sum(contrastData)/len(contrastData)
+    dissimilarity = sum(dissimilarityData)/len(dissimilarityData)
+    homogeneity = sum(homogeneityData)/len(homogeneityData)
+    ASM = sum(ASMData)/len(ASMData)
+    energy = sum(energyData)/len(energyData)
+    entropy = sum(entropyData)/len(entropyData)
+    colleration = sum(collerationData)/len(collerationData)
+
+    squared_differences = [(x - mean_value) ** 2 for x in contrastData]
+    contrastStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in dissimilarityData]
+    dissimilarityStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in homogeneityData]
+    homogeneityStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in ASMData]
+    ASMStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in energyData]
+    energyStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in entropyData]
+    entropyStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    squared_differences = [(x - mean_value) ** 2 for x in collerationData]
+    collerationStandardDeviation = (sum(squared_differences) / n) ** 0.5
+
+    return [contrast, contrastStandardDeviation, dissimilarity, dissimilarityStandardDeviation, homogeneity, homogeneityStandardDeviation, ASM, ASMStandardDeviation, energy, energyStandardDeviation, entropy, entropyStandardDeviation, colleration, collerationStandardDeviation]
 
 def compareByTexture(Texture1, Texture2):
     cosineSimilarity = 0
@@ -236,8 +197,6 @@ def compareByTexture(Texture1, Texture2):
     cosineSimilarity = dot_product / (math.sqrt(normA) * math.sqrt(normB))
     # lakukan cosine similarity
     return cosineSimilarity
-
-
 
 def decimalToPercentage(decimal):
     """Mengubah nilai desimal menjadi persentase dua angka di belakang koma"""
