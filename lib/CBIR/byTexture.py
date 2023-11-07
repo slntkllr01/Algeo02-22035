@@ -2,29 +2,32 @@
 # Reference: https://www.sciencedirect.com/science/article/pii/S0895717710005352#s000030
 # Reference: https://ojs.uma.ac.id/index.php/jite/article/view/3885/2785
 
-from extract import *
+import math
 
 def rgbToGrayscale(vektorRGB):
     """Mengubah nilai vektor RGB menjadi Grayscale """
-    vektorGrayscale = []
+    vektorGrayscale = [[0 for i in range(len(vektorRGB))] for j in range (len(vektorRGB))]
     for i in range(0, len(vektorRGB)):
-        r = vektorRGB[i][0]
-        g = vektorRGB[i][1]
-        b = vektorRGB[i][2]
-        vektorGrayscale.append(round(0.29*r + 0.587*g + 0.114*b))
+        for j in range (0, len(vektorRGB)):
+            r = vektorRGB[i][j][0]
+            g = vektorRGB[i][j][1]
+            b = vektorRGB[i][j][2]
+            vektorGrayscale[i][j]=round(0.29*r + 0.587*g + 0.114*b)
     return vektorGrayscale
 
 def quantifyGrayscale(vektorGrayscale):
     """[optional] for faster processing, quantize grayscale value.
     The idea is like the following, but the quantization number lets discuss"""
-    vektorQuantized = []
-    for i in range(0, len(vektorGrayscale)):
-        vektorQuantized.append(vektorGrayscale[i]//8)
+    length = len(vektorGrayscale)
+    vektorQuantized = [[0 for i in range(length)] for j in range (length)]
+    for i in range(0, length):
+        for j in range (0, length):
+            vektorQuantized[i][j]=vektorGrayscale[i][j]//2
     return vektorQuantized
 
 def buildCoOccurenceMatrixA(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 0 derajat"""
-    CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
+    CoOccurenceMatrix = [[0 for i in range(128)] for j in range(128)]
     length = len(vektorQuantized)
     for i in range(length):
         for j in range(length-1):
@@ -33,7 +36,7 @@ def buildCoOccurenceMatrixA(vektorQuantized):
 
 def buildCoOccurenceMatrixB(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 90 derajat"""
-    CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
+    CoOccurenceMatrix = [[0 for i in range(128)] for j in range(128)]
     length = len(vektorQuantized)
     for i in range(length-1):
         for j in range(length):
@@ -42,7 +45,7 @@ def buildCoOccurenceMatrixB(vektorQuantized):
 
 def buildCoOccurenceMatrixC(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 45 derajat"""
-    CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
+    CoOccurenceMatrix = [[0 for i in range(128)] for j in range(128)]
     length = len(vektorQuantized)
     for i in range(1, length):
         for j in range(length-1):
@@ -51,7 +54,8 @@ def buildCoOccurenceMatrixC(vektorQuantized):
 
 def buildCoOccurenceMatrixD(vektorQuantized):
     """" Membangun matriks co-occurence matriks vektor grayscale dengan jarak 1 skala 135 derajat"""
-    CoOccurenceMatrix = [[0 for i in range(32)] for j in range(32)]
+    CoOccurenceMatrix = [[0 for i in range(128)] for j in range(128)]
+    length = len(vektorQuantized)
     for i in range(1, length):
         for j in range(1, length):
             CoOccurenceMatrix[vektorQuantized[i][j]][vektorQuantized[i-1][j-1]] += 1
@@ -171,25 +175,29 @@ def getTextureFeatures(ImageMatrix):
     entropy = sum(entropyData)/len(entropyData)
     colleration = sum(collerationData)/len(collerationData)
 
-    squared_differences = [(x - mean_value) ** 2 for x in contrastData]
+    n = 4
+    squared_differences = [(x - contrast) ** 2 for x in contrastData]
     contrastStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in dissimilarityData]
+    squared_differences = [(x - dissimilarity) ** 2 for x in dissimilarityData]
     dissimilarityStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in homogeneityData]
+    squared_differences = [(x - homogeneity) ** 2 for x in homogeneityData]
     homogeneityStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in ASMData]
+    squared_differences = [(x - ASM) ** 2 for x in ASMData]
     ASMStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in energyData]
+    squared_differences = [(x - energy) ** 2 for x in energyData]
     energyStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in entropyData]
+    squared_differences = [(x - entropy) ** 2 for x in entropyData]
     entropyStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - mean_value) ** 2 for x in collerationData]
+    squared_differences = [(x - colleration) ** 2 for x in collerationData]
     collerationStandardDeviation = (sum(squared_differences) / n) ** 0.5
 
     return [contrast, contrastStandardDeviation, dissimilarity, dissimilarityStandardDeviation, homogeneity, homogeneityStandardDeviation, ASM, ASMStandardDeviation, energy, energyStandardDeviation, entropy, entropyStandardDeviation, colleration, collerationStandardDeviation]
 
 def compareByTexture(Texture1, Texture2):
     cosineSimilarity = 0
+    dot_product = 0
+    normA = 0
+    normB = 0
     for i in range (len(Texture1)):
         dot_product += Texture1[i] * Texture2[i]
         normA += Texture1[i]**2
