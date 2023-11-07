@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-def RGBtoHSV():
-    img = cv2.imread('C:\\Users\\raffa\\OneDrive\\Dokumen\\GitHub\\Algeo02-22035\\lib\\CBIR\\0.jpg')
+def CBIRbyColor(path):
+    img = cv2.imread(path)
 
     resized_img = cv2.resize(img, (60, 60))
 
@@ -37,29 +37,23 @@ def RGBtoHSV():
     # Menghitung S
     S[Cmax != 0] = delta[Cmax != 0] / Cmax[Cmax != 0]
 
-    # Ukuran gambar
+    # karena sumsi image_height = image_width
     image_height, image_width = H.shape
 
-    # Ukuran blok yang diinginkan
-    desired_block_size = 3  # Ukuran blok 13x13 piksel
+    # Ukuran blok yang diinginkan (disesuaikan dengan partisi 3x3)
+    desired_block_size = image_height // 3  # Ukuran blok yang akan dipartisi
 
-    # Hitung jumlah blok berdasarkan ukuran gambar dan ukuran blok
-    num_blocks_height = image_height // desired_block_size
-    num_blocks_width = image_width // desired_block_size
-
-    # Inisialisasi daftar untuk menyimpan histogram warna blok-blok
+    # Loop untuk membagi gambar menjadi blok 3x3 dan menghitung histogram warna
     histograms = []
-
-    # Loop untuk membagi gambar menjadi blok-block dan menghitung histogram warna
-    for i in range(num_blocks_height):
-        for j in range(num_blocks_width):
+    for i in range(3):
+        for j in range(3):
             # Tentukan koordinat awal dan akhir untuk blok saat ini
             start_row = i * desired_block_size
             end_row = start_row + desired_block_size
             start_col = j * desired_block_size
             end_col = start_col + desired_block_size
-            
-            # Ambil blok 13x13 dari komponen H, S, dan V
+
+            # Ambil blok dari komponen H, S, dan V
             block_H = H[start_row:end_row, start_col:end_col]
             block_S = S[start_row:end_row, start_col:end_col]
             block_V = V[start_row:end_row, start_col:end_col]
@@ -71,9 +65,10 @@ def RGBtoHSV():
 
             # Gabungkan histogram warna dari komponen H, S, dan V
             histogram = np.concatenate((hist_H, hist_S, hist_V))
-            
             # Tambahkan histogram ke daftar histograms
             histograms.append(histogram)
 
+    # Menggabungkan semua elemen histograms menjadi satu array
+    concatenated_histograms = np.concatenate(histograms)
 
-RGBtoHSV()
+    return concatenated_histograms
