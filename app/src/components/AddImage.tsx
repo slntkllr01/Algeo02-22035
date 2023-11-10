@@ -1,8 +1,25 @@
 // import dummypic from "../assets/pic.png"
+import React, {useState, useEffect} from "react";
 
 function AddImage() {
+  // const [currentTime, setCurrentTime] = useState(0);
+  // useEffect(() => {
+  //   fetch("/time").then((res) => res.json()).then((data) => {
+  //     setCurrentTime(data.time);
+  //   });
+  // }, []);
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    fetch('/api/hello')
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message));
+  }, []);
+
   return (
     <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
+      <div className="m-2">
+        <p>Ini dari Backend {message}</p>
+      </div>
 
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center m-4">
         {/* Display image area (you can add your display logic here) */}
@@ -50,7 +67,6 @@ function AddImage() {
           Upload Dataset
         </button>
       </div>
-
     </div>
   );
 }

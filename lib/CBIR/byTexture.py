@@ -3,6 +3,7 @@
 # Reference: https://ojs.uma.ac.id/index.php/jite/article/view/3885/2785
 
 import math
+import numpy as np
 
 def rgbToGrayscale(vektorRGB):
     """Mengubah nilai vektor RGB menjadi Grayscale """
@@ -22,7 +23,7 @@ def quantifyGrayscale(vektorGrayscale):
     vektorQuantized = [[0 for i in range(length)] for j in range (length)]
     for i in range(0, length):
         for j in range (0, length):
-            vektorQuantized[i][j]=vektorGrayscale[i][j]//2
+            vektorQuantized[i][j]=vektorGrayscale[i][j]//8
     return vektorQuantized
 
 def buildCoOccurenceMatrixA(vektorQuantized):
@@ -167,31 +168,40 @@ def getTextureFeatures(ImageMatrix):
     entropyData = [getEntropy(GLCM1A), getEntropy(GLCM1B), getEntropy(GLCM1C), getEntropy(GLCM1D)]
     collerationData = [getColleration(GLCM1A), getColleration(GLCM1B), getColleration(GLCM1C), getColleration(GLCM1D)]
 
-    contrast = sum(contrastData)/len(contrastData)
-    dissimilarity = sum(dissimilarityData)/len(dissimilarityData)
-    homogeneity = sum(homogeneityData)/len(homogeneityData)
-    ASM = sum(ASMData)/len(ASMData)
-    energy = sum(energyData)/len(energyData)
-    entropy = sum(entropyData)/len(entropyData)
-    colleration = sum(collerationData)/len(collerationData)
+    # contrast = sum(contrastData)/len(contrastData)
+    # dissimilarity = sum(dissimilarityData)/len(dissimilarityData)
+    # homogeneity = sum(homogeneityData)/len(homogeneityData)
+    # ASM = sum(ASMData)/len(ASMData)
+    # energy = sum(energyData)/len(energyData)
+    # entropy = sum(entropyData)/len(entropyData)
+    # colleration = sum(collerationData)/len(collerationData)
 
-    n = 4
-    squared_differences = [(x - contrast) ** 2 for x in contrastData]
-    contrastStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - dissimilarity) ** 2 for x in dissimilarityData]
-    dissimilarityStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - homogeneity) ** 2 for x in homogeneityData]
-    homogeneityStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - ASM) ** 2 for x in ASMData]
-    ASMStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - energy) ** 2 for x in energyData]
-    energyStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - entropy) ** 2 for x in entropyData]
-    entropyStandardDeviation = (sum(squared_differences) / n) ** 0.5
-    squared_differences = [(x - colleration) ** 2 for x in collerationData]
-    collerationStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # n = 4
+    # squared_differences = [(x - contrast) ** 2 for x in contrastData]
+    # contrastStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - dissimilarity) ** 2 for x in dissimilarityData]
+    # dissimilarityStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - homogeneity) ** 2 for x in homogeneityData]
+    # homogeneityStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - ASM) ** 2 for x in ASMData]
+    # ASMStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - energy) ** 2 for x in energyData]
+    # energyStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - entropy) ** 2 for x in entropyData]
+    # entropyStandardDeviation = (sum(squared_differences) / n) ** 0.5
+    # squared_differences = [(x - colleration) ** 2 for x in collerationData]
+    # collerationStandardDeviation = (sum(squared_differences) / n) ** 0.5
 
-    return [contrast, contrastStandardDeviation, dissimilarity, dissimilarityStandardDeviation, homogeneity, homogeneityStandardDeviation, ASM, ASMStandardDeviation, energy, energyStandardDeviation, entropy, entropyStandardDeviation, colleration, collerationStandardDeviation]
+    # featuresTemp = [contrast, contrastStandardDeviation, dissimilarity, dissimilarityStandardDeviation, homogeneity, homogeneityStandardDeviation, ASM, ASMStandardDeviation, energy, energyStandardDeviation, entropy, entropyStandardDeviation, colleration, collerationStandardDeviation]
+    # internal normalization gaussian distribution from array featuresTemp
+
+    featuresTemp = contrastData + dissimilarityData + homogeneityData + ASMData + energyData + entropyData + collerationData
+    # textureFeature = []
+    # for i in range(len(featuresTemp)):
+    #     mean = sum(featuresTemp) / len(featuresTemp)
+    #     stdev = math.sqrt(sum([(x - mean) ** 2 for x in featuresTemp]) / len(featuresTemp))
+    #     textureFeature.append((featuresTemp[i] - mean) / stdev)
+    return featuresTemp
 
 def compareByTexture(Texture1, Texture2):
     cosineSimilarity = 0
@@ -203,7 +213,6 @@ def compareByTexture(Texture1, Texture2):
         normA += Texture1[i]**2
         normB += Texture2[i]**2
     cosineSimilarity = dot_product / (math.sqrt(normA) * math.sqrt(normB))
-    # lakukan cosine similarity
     return cosineSimilarity
 
 def decimalToPercentage(decimal):

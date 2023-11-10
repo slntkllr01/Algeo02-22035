@@ -6,7 +6,7 @@ from byTexture import *
 from byColor import*
 
 dataset = "lib/CBIR/dataset/0.jpg" 
-dataset2 = "lib/CBIR/dataset/1.jpg" 
+dataset2 = "lib/CBIR/dataset/4.jpg" 
 
 # dataset_dir = "lib/CBIR/dataset"
 # image_list= []
@@ -27,14 +27,14 @@ dataset2 = "lib/CBIR/dataset/1.jpg"
 image= cv2.imread(dataset)
 image = cv2.resize(image,(64,64))
 print(image)
-feature = getTextureFeatures(dataset)
+feature = getTextureFeatures(image)
 print(feature)
 
 
 image2= cv2.imread(dataset2)
 image2 = cv2.resize(image2,(64,64))
 # print(image)
-feature2 = getTextureFeatures(dataset2)
+feature2 = getTextureFeatures(image2)
 print(feature2)
 
 nilai = compareByTexture(feature, feature2)
