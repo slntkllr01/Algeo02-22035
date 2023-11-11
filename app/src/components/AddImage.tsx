@@ -1,6 +1,11 @@
 // import dummypic from "../assets/pic.png"
 import React, {useState, useEffect} from "react";
 
+
+interface ApiResponse {
+  message: string;
+}
+
 function AddImage() {
   // const [currentTime, setCurrentTime] = useState(0);
   // useEffect(() => {
@@ -11,8 +16,16 @@ function AddImage() {
   const [message, setMessage] = useState('');
   useEffect(() => {
     fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message));
+      .then((res) => res.json()).then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json() as ApiResponse; // Sesuaikan dengan struktur respons dari server
+      })
+      .then((data) => setMessage(data.message))
+      .catch((error) => {
+        console.error("Error fetching hello message:", error);
+      });
   }, []);
 
   return (
