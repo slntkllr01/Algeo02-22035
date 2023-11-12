@@ -1,7 +1,6 @@
 // import dummypic from "../assets/pic.png"
 import React, {useState, useEffect} from "react";
-import UploadDatasetButton from "./UploadImageFile";
-import UploadImageFile from "./UploadImageFile";
+import UploadDataset from "./UploadDataset";
 
 // interface ApiResponse {
 //   message: string;
@@ -72,7 +71,7 @@ function AddImage() {
       </div>
       
       <div className="m-4">
-        <UploadImageFile />
+        <UploadDataset />
       </div>
     </div>
   );

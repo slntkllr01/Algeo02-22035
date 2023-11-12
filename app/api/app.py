@@ -23,7 +23,7 @@ def hello():
 # UPLOAD DATASET
 print("Current working directory:", os.getcwd())
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'image')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'dataset')
 # ALLOWED_EXTENSIONS = {'zip', 'tar', 'tar.gz', '.jpeg', '.jpg', '.png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -52,7 +52,7 @@ def uploadDataset():
     else:
     # if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file_path = os.path.join(BASE_DIR, 'image', filename)
+        file_path = os.path.join(BASE_DIR, 'dataset', filename)
         print("Saving file to:", file_path)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         resp = jsonify({

@@ -1,7 +1,7 @@
 import React, {useState, ChangeEvent} from "react";
 import axios from "axios";  
 
-const UploadImageFile: React.FC = () => {
+const UploadDataset: React.FC = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +43,10 @@ const UploadImageFile: React.FC = () => {
             </label>
             <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
             onClick={handleUpload}>
-            Upload Image File
+            Upload Dataset
             </button>
         </div>
     );
 };
 
-export default UploadImageFile
+export default UploadDataset
