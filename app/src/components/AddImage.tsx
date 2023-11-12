@@ -13,16 +13,11 @@ function AddImage() {
   //     setCurrentTime(data.time);
   //   });
   // }, []);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('test');
   useEffect(() => {
-    fetch('/api/hello')
-      .then((res) => res.json()).then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json() as ApiResponse; // Sesuaikan dengan struktur respons dari server
-      })
-      .then((data) => setMessage(data.message))
+    fetch('http://localhost:5000/time')
+      .then((res) => res.json())
+      .then((data) => setMessage(data.time))
       .catch((error) => {
         console.error("Error fetching hello message:", error);
       });
