@@ -1,10 +1,11 @@
 // import dummypic from "../assets/pic.png"
 import React, {useState, useEffect} from "react";
+import UploadDatasetButton from "./UploadImageFile";
+import UploadImageFile from "./UploadImageFile";
 
-
-interface ApiResponse {
-  message: string;
-}
+// interface ApiResponse {
+//   message: string;
+// }
 
 function AddImage() {
   // const [currentTime, setCurrentTime] = useState(0);
@@ -71,9 +72,7 @@ function AddImage() {
       </div>
       
       <div className="m-4">
-        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
-          Upload Dataset
-        </button>
+        <UploadImageFile />
       </div>
     </div>
   );
