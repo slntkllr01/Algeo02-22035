@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from "react";
 import UploadImage from "./UploadImage";
 
+
 function AddImage() {
 
   const [message, setMessage] = useState('test');
@@ -13,6 +14,11 @@ function AddImage() {
         console.error("Error fetching hello message:", error);
       });
   }, []);
+
+  // const handleDrop = (acceptedFiles: File[]) => {
+  //   console.log('Files dropped:', acceptedFiles);
+  //   // Add any additional logic for handling dropped files
+  // };
 
   return (
     <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
@@ -58,6 +64,24 @@ function AddImage() {
           Search
         </button>
       </div>
+
+      <div className="m-4">
+        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
+        <input
+        type="file"
+        id="fileInputControl"
+        // @ts-ignore
+        webkitdirectory
+        multiple
+      />
+          Upload Dataset
+        </button>
+      </div>
+
+      {/* <div className="App">
+        <h1>Folder Upload with Dropzone.js</h1>
+        <DropzoneComponent onDrop={handleDrop} />
+      </div> */}
         
     </div>
   );

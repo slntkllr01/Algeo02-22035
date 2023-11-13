@@ -40,18 +40,18 @@ const UploadDataset: React.FC = () => {
     };
 
     return(
-        <div className="m-4">
-            <label htmlFor="uploadDataset">
-                <input id="uploadDataset" name="file" type="file" onChange={handleFileChange}/>
-            </label>
-            <button  className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
-            onClick={handleUpload}>
-              Insert Image
-            </button>
-            {uploadMessage && (
-              <p className="text-red-400">{uploadMessage}</p>
-            )}
-        </div>
+      <div className="m-4">
+      <label htmlFor="uploadDataset">
+        <input id="uploadDataset" name="file" type="file" onChange={handleFileChange} />
+      </label>
+      <button
+        className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
+        onClick={handleUpload}
+      >
+        Insert Image
+      </button>
+      {uploadMessage && <p className="text-red-400">{uploadMessage}</p>}
+    </div>
     );
 };
 
