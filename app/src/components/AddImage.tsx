@@ -1,18 +1,9 @@
 // import dummypic from "../assets/pic.png"
 import React, {useState, useEffect} from "react";
-import UploadDataset from "./UploadDataset";
-
-// interface ApiResponse {
-//   message: string;
-// }
+import UploadImage from "./UploadImage";
 
 function AddImage() {
-  // const [currentTime, setCurrentTime] = useState(0);
-  // useEffect(() => {
-  //   fetch("/time").then((res) => res.json()).then((data) => {
-  //     setCurrentTime(data.time);
-  //   });
-  // }, []);
+
   const [message, setMessage] = useState('test');
   useEffect(() => {
     fetch('http://localhost:5000/time')
@@ -41,9 +32,7 @@ function AddImage() {
       </div>
 
       <div className="m-4">
-        <button className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
-          Insert Image
-        </button>
+        <UploadImage />
       </div>
 
       <div className="m-4">
@@ -69,10 +58,7 @@ function AddImage() {
           Search
         </button>
       </div>
-      
-      <div className="m-4">
-        <UploadDataset />
-      </div>
+        
     </div>
   );
 }
