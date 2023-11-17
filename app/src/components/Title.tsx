@@ -118,9 +118,9 @@ function Title() {
       <nav>
         <ul className="flex space-x-10 text-white pr-8">
           <li>
-            <a href="#welcome-section" className="hover:text-gray-300">
+          <button className="hover:text-gray-300 focus:outline-none" onClick={openConceptModal}>
               Concept
-            </a>
+            </button>
           </li>
           <li>
             <button className="hover:text-gray-300 focus:outline-none" onClick={openUseModal}>
@@ -136,13 +136,13 @@ function Title() {
       </nav>
 
       {/* Modal untuk Concept */}
-      <Modal isOpen={conceptModalOpen} onClose={closeConceptModal} title="Concept" pages={conceptPages} maxPages={conceptPages.length} />
+      <Modal isOpen={conceptModalOpen} onClose={closeConceptModal} title="Concept" pages={conceptPages} maxPages={4} />
 
       {/* Modal untuk Use */}
-      <Modal isOpen={useModalOpen} onClose={closeUseModal} title="Use" pages={usePages} maxPages={usePages.length} />
+      <Modal isOpen={useModalOpen} onClose={closeUseModal} title="Use" pages={usePages} maxPages={4} />
 
       {/* Modal untuk About Us */}
-      <Modal isOpen={aboutUsModalOpen} onClose={closeAboutUsModal} title="About Us" pages={aboutUsPages} maxPages={aboutUsPages.length} />
+      <Modal isOpen={aboutUsModalOpen} onClose={closeAboutUsModal} title="About Us" pages={aboutUsPages} maxPages={4} />
     </div>
   );
 }
