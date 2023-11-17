@@ -7,7 +7,8 @@ from byTexture import *
 from byColor import*
 
 reference_image_path = "lib/CBIR/0.jpg" 
-folder_path = "lib/CBIR/dataset" 
+
+folder_path = "lib/CBIR/datasetByTexture" 
 
 reference_image = cv2.imread(reference_image_path)
 reference_image = cv2.resize(reference_image, (256, 256))

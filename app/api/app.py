@@ -26,6 +26,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'dataset')
 # ALLOWED_EXTENSIONS = {'zip', 'tar', 'tar.gz', '.jpeg', '.jpg', '.png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CURRENT_IMAGE_FOLDER'] = CURRENT_IMAGE_FOLDER
 
 # def allowed_file(filename):
 #     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -61,6 +62,43 @@ def uploadDataset():
         })
         return resp
     return jsonify({'error': 'No selected file'})
+
+
+@app.route('/process_and_compare', methods=['POST'])
+def process_and_compare():
+    if 'file' not in request.files:
+        resp = jsonify({
+            "message": 'No file part in the request',
+            "status": 'success'
+        })
+        resp.status_code = 400
+        return resp   
+    
+    file = request.files['file']
+    if file.filename == '':
+        resp = jsonify({
+            "message": 'No file selected for processing',
+            "status": 'success'
+        })
+        resp.status_code = 400
+        return resp
+    else:
+        # Implement your image processing and comparison logic here
+        # Use the uploaded image directly, no need for a separate "current image"
+        filename = secure_filename(file.filename)
+        current_image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        # Implement your image processing and comparison logic here using current_image_path
+        # ...
+
+        resp = jsonify({
+            "message": 'Image processed and compared successfully',
+            "status": 'success'
+        })
+        return resp
+# @app.route('/post/<int')
+
+
     
 
 if __name__ == '__main__':

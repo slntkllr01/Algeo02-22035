@@ -42,7 +42,7 @@ const UploadDataset: React.FC = () => {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }); 
+        });
 
         // tampilkan pesan
         setUploadMessage(`File "${selectedFile.name}" uploaded successfully!`);
