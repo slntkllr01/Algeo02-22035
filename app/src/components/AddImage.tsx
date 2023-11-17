@@ -23,19 +23,19 @@ function AddImage() {
   return (
     <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
       <div className="m-2">
-        <p>Ini dari Backend {message}</p>
+        <p> Pukul :  {message}</p>
       </div>
 
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center m-4">
+      {/* <div className="w-full md:w-1/2 flex flex-col justify-center items-center m-4"> */}
         {/* Display image area (you can add your display logic here) */}
-        <div className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center">
-          <img src={require("../assets/pic.png")} alt="dummy"/>
+        {/* <div className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center">
+          <img src={require("../assets/pic.png")} alt="dummy"/> */}
           {/* Display images or other content here */}
-        </div>
+        {/* </div>
         <div>
           <p className="text-sm pt-2">dummy.jpg</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="m-4">
         <UploadImage />
