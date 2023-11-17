@@ -53,20 +53,31 @@ const UploadDataset: React.FC = () => {
       }
     };
 
-    return(
-      <div className="m-4 items-center">
-        <label htmlFor="uploadImage">
-          <div id="display_image"  className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center" style={{ backgroundImage: `url(${uploadImage})` }}></div>
-          <input type="file" id="image" accept="image/png,image/jpg" onChange={handleFileChange} className="mt-4 p-4 text-center" />
-        </label>
+    return (
+    <div className="m-4 justify-center">
+      <label htmlFor="uploadImage" className="flex flex-col items-center">
+        <div
+          id="display_image"
+          className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center"
+          style={{
+            backgroundImage: `url(${uploadImage})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+      <div className="mt-8 items-center">
+        <input type="file" id="image" accept="image/png,image/jpg" onChange={handleFileChange} className="text-center" />
         <button
-          className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           onClick={handleUpload} 
         >
           Insert Image
         </button>
-        {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
       </div>
+      </label>
+      {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
+    </div>
     );
 };
 

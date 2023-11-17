@@ -21,7 +21,7 @@ function AddImage() {
   // };
 
   return (
-    <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
+    <div className="flex flex-row md:flex-col justify-evenly items-center p-4 space-y-4 md:space-y-0 md:space-x-4">
       <div className="m-2">
         <p> Pukul :  {message}</p>
       </div>
