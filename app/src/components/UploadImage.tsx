@@ -89,15 +89,21 @@ const UploadDataset: React.FC = () => {
             backgroundPosition: 'center',
           }}
         ></div>
-        <div className="mt-8 items-center">
-          <form>
-          <input type="file" id="image" accept="image/png,image/jpg" onChange={handleFileChange} className="text-center" />
-          <button
-            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={handleUpload} 
-          >
-            Insert Image
-          </button>
+        <div className="mt-8 pt-4 pb-4 flex flex-col">
+          <form className="flex items-center justify-between">
+            <input
+              type="file"
+              id="image"
+              accept="image/png,image/jpg"
+              onChange={handleFileChange}
+              className="text-center"
+            />
+            <button
+              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
+              onClick={handleUpload}
+            >
+              Insert Image
+            </button>
           </form>
         </div>
       </label>
@@ -122,7 +128,7 @@ const UploadDataset: React.FC = () => {
 
           <label htmlFor="check" className="bg-gray-300 cursor-pointer relative w-20 h-10 rounded-full">
             <input type="checkbox" id="check" className="sr-only peer" />
-            <span className="w-2/5 h-4/5 bg-blue-300 absolute rounded-full left-1 top-1
+            <span className="w-2/5 h-4/5 bg-blue-500 absolute rounded-full left-1 top-1
             peer-checked:bg-blue-500 peer-checked:left-11 transition-all duration-500"></span>
           </label>
 
@@ -134,7 +140,7 @@ const UploadDataset: React.FC = () => {
 
         <div className="m-4 items-center justify-center">
           <button
-            className="bg-blue-600 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
+            className="bg-blue-600 text-white py-2 px-4  rounded hover:bg-blue-600"
             onClick={handleSearch}
           >
             Search
