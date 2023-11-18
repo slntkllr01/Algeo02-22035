@@ -1,11 +1,10 @@
 // src/App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect }, { useState, useEffect } from 'react';
 import Title from './components/Title';
 import AddImage from './components/AddImage';
 import CardComponent from './components/pagination';
 
 function App() {
-<<<<<<< HEAD
   const data = [
     { title: 'Item 1', description: 'Description 1' },
     { title: 'Item 2', description: 'Description 2' },
@@ -23,7 +22,6 @@ function App() {
   ];
 
   
-=======
   // const [cardData, setCardData] = useState([]);
 
   // const fetchData = async () => {
@@ -55,20 +53,19 @@ function App() {
   //   fetchData(); // Panggil fetchData ketika komponen di-mount
   // }, []); // Parameter kedua berupa array kosong agar useEffect hanya dijalankan sekali saat komponen di-mount
 
->>>>>>> 625410fb28f8e0db7d421a900bb8793f87361310
+
   return (
     <div className="m-8 min-h-screen bg-blue-100">
       <Title />
       <div className="flex flex-row">
-<<<<<<< HEAD
+
       <AddImage />
       {/* <CardComponent data = {data} /> */}
       {/* <CardComponent/> */}
-      <MultiFileUpload/>
-=======
+      {/* <MultiFileUpload/> */}
+
         <AddImage />
-        <CardComponent data={cardData} />
->>>>>>> 625410fb28f8e0db7d421a900bb8793f87361310
+        {/* <CardComponent data={cardData} /> */}
       </div>
     </div>
   );
