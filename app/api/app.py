@@ -5,14 +5,11 @@ from flask_cors import CORS
 import traceback
 import os
 from werkzeug.utils import secure_filename
-from lib.CBIR.main import compareImage
-# from lib.CBIR.main import compareImage
-
+from algeo.CBIR.compare import compareImage
 app = Flask(__name__)
 CORS(app)
 
 # print(sys.path)
-
 
 
 def format_result(result):
@@ -40,14 +37,21 @@ def get_current_time():
 def hello():
     return jsonify({'message': 'Hello, World!'})
 
-file_path = None
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+file_path = os.path.join(BASE_DIR,'dataset')
+#image
+folder_path = os.path.join(BASE_DIR, 'uploaded_dataset')
+#dataset
+
 
 # UPLOAD DATASET
 print("Current working directory:", os.getcwd())
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'dataset')
+UPLOAD_DATASET = os.path.join(BASE_DIR,'uploaded_dataset')
 # ALLOWED_EXTENSIONS = {'zip', 'tar', 'tar.gz', '.jpeg', '.jpg', '.png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_DATASET'] = UPLOAD_DATASET
+
 
 
 @app.route('/upload_dataset', methods=['GET','POST'])
@@ -78,28 +82,29 @@ def uploadDataset():
         })
     
     return resp
-    # return jsonify({'error': 'No selected file'})
 
 
 @app.route('/upload_multidata', methods = ['POST'])
 def upload_multidata():
+    global folder_path
     try:
         if "files[]" not in request.files:
             return jsonify({"message": "No files part in the request"}), 400
 
         files = request.files.getlist("files[]")
-
         if not files:
             return jsonify({"message": "No files selected for uploading"}), 400
 
         # Ganti nama folder upload menjadi UPLOAD_DATASET
-        folder_path = os.path.join(app.config["UPLOAD_DATASET"], "uploaded_dataset")
+        folder_path = os.path.join(UPLOAD_DATASET, "uploaded_dataset")
         os.makedirs(folder_path, exist_ok=True)
 
         for file in files:
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(folder_path, filename)
-            file.save(file_path)
+            # file = request.files['file']
+            filename = file.filename
+            # folder_path = os.path.join(BASE_DIR,'multidataset', filename)
+            file.save(os.path.join(folder_path, filename))
+            # print(file)
 
         return jsonify({"message": "Files successfully uploaded", "folder_path": folder_path})
     except Exception as error:
@@ -108,12 +113,20 @@ def upload_multidata():
 
 @app.route('/process_and_compare', methods=['GET'])
 def process_and_compare():
+    global folder_path
     global file_path
-    file_path_temp = request.args.get('file_path', default=None, type=str)
-    if file_path_temp is None:
-        return jsonify({"error": "Parameter 'file_path' is required"}), 400
-    compare_values_to_display = compareImage(file_path_temp, "lib/CBIR/dataset")
-    formatted_result = format_result(compare_values_to_display)
+    file_path_temp = os.path.abspath('.')
+    file_path_temp = os.path.join(file_path_temp, 'dataset')
+    folder_path_temp = os.listdir(file_path_temp)
+    # folder_path_temp = request.args.get(folder_path, default=None)
+
+    if file_path_temp is None or folder_path_temp is None:
+        return jsonify({"error": f"Parameter {folder_path} is required"}), 400
+    for filename in folder_path_temp :
+        # print(filename)
+    
+        compare_values_to_display = compareImage('dataset/'+filename, 'uploaded_dataset')
+        formatted_result = format_result(compare_values_to_display)
     return jsonify(formatted_result)
 
 if __name__ == '__main__':

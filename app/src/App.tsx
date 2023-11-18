@@ -22,12 +22,16 @@ function App() {
         { title: 'Item 2', description: 'Description 2' },
     
   ];
+
+  
   return (
-    <div className="min-h-screen bg-blue-100">
+    <div className="m-8 min-h-screen bg-blue-100">
       <Title />
       <div className="flex flex-row">
       <AddImage />
-      <CardComponent data={data} />
+      {/* <CardComponent data = {data} /> */}
+      {/* <CardComponent/> */}
+      <MultiFileUpload/>
       </div>
     </div>
   );

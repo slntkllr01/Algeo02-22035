@@ -50,6 +50,7 @@ const MultiFileUpload: React.FC = () => {
     }
   };
 
+
   return (
     <div className="container mx-auto mt-8">
       <form onSubmit={handleUpload}>
@@ -71,6 +72,12 @@ const MultiFileUpload: React.FC = () => {
         </button>
         {uploadMessage && <p className="text-red-400 mt-2">{uploadMessage}</p>}
       </form>
+
+      <form method="post" encType="multipart/form-data">
+        <input type="file" name="files[]" multiple />
+        <input type="submit" value="Upload" />
+      </form>
+
     </div>
   );
 };

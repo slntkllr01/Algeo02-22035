@@ -5,12 +5,18 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 # from PIL import Image
 
-from byTexture import *
-from byColor import*
+# from .byTexture import getTextureFeatures,compareByTexture
+from .byTexture import*
+# import byColor as byColor
+# import byTexture as byTexture
+# from lib.CBIR.byTexture import *
+# from lib.CBIR.byColor import *
+# import byColor 
+# import byTexture
 
 
-reference_image_path = "lib/CBIR/0.jpg" 
-folder_path = "lib/CBIR/datasetByTexture" 
+# reference_image_path = "lib/CBIR/0.jpg" 
+# folder_path = "lib/CBIR/datasetByTexture" 
 
 
 def compareImage(reference_image_path,folder_path):
@@ -25,7 +31,7 @@ def compareImage(reference_image_path,folder_path):
     compare_value = 0
     compare_values_to_display = []
     sorted_compare_value_to_display = []
-    start = time.time()
+    # start = time.time()
     for image_file in image_files:
         # Construct the full path to the image file
         image_path = os.path.join(folder_path, image_file)
@@ -51,8 +57,7 @@ def compareImage(reference_image_path,folder_path):
     # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
     return  (sorted_compare_value_to_display)
 
-# print(compareImage( "lib/CBIR/0.jpg","lib/CBIR/datasetByTexture"))
-
+# print(compareImage( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
 
 
 
