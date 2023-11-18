@@ -5,12 +5,17 @@ from flask_cors import CORS
 import traceback
 import os
 from werkzeug.utils import secure_filename
+<<<<<<< HEAD
 from algeo.CBIR.compare import compareImage
 app = Flask(__name__)
 CORS(app)
 
 # print(sys.path)
 
+from lib.CBIR.main import compareImage
+
+app = Flask(__name__)
+CORS(app)
 
 def format_result(result):
     formatted_result = []

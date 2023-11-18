@@ -82,12 +82,12 @@ function CardComponent({ data }: CardComponentProps) {
             <div className="h-[83%]">
               {/* Bagian Atas: Foto atau gambar */}
               <div className="bg-blue-400 w-full h-full flex items-center justify-center">
-                <span className="text-white text-xl font-bold">{item.percentage}</span>
+                <span className="text-white text-xl font-bold">{item.imgpath}</span>
               </div>
             </div>
             <div className="h-1/4 flex flex-col justify-center">
               {/* Bagian Bawah: Teks */}
-              <h2 className="text-xl font-semibold text-center">{item.imgpath}</h2>
+              <h2 className="text-xl font-semibold text-center">{item.percentage}</h2>
             </div>
           </div>
         ))}
