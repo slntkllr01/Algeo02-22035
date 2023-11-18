@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import axios from "axios"; 
 
-const FolderUpload: React.FC = () => {
+
+const MultiFileUpload: React.FC = () => {
   const [uploadMessage, setUploadMessage] = useState<string>('');
+  const [folderPath, setFolderPath] = useState<string>('');
+  const [uploadedPaths, setUploadedPaths] = useState<string[]>([]); 
 
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,21 +23,28 @@ const FolderUpload: React.FC = () => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       formData.append('files[]', file, file.webkitRelativePath || '');
+
+       // Simpan path ke dalam array
+      setUploadedPaths(prevPaths => [...prevPaths, file.webkitRelativePath || '']);
     }
 
     try {
-      const response = await fetch('/upload_folder', {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post('http://localhost:5000/upload_multidata', {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
 
-      if (response.ok) {
+      if (response.status == 200) {
+        const data = await response.data();
         setUploadMessage('Folder and its contents uploaded successfully.');
+        setFolderPath(data.folder_path);
       } else {
-        const data = await response.json();
+        const data = await response.data();
         setUploadMessage(data.message || 'Upload failed.');
       }
-    } catch (error) {
+    }
+     catch (error) {
       console.error('Error during upload:', error);
       setUploadMessage('An error occurred during upload.');
     }
@@ -63,7 +74,9 @@ const FolderUpload: React.FC = () => {
   );
 };
 
-export default FolderUpload;
+export default MultiFileUpload;
+
+
 
 
 

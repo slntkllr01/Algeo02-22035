@@ -20,38 +20,37 @@ def get_current_time():
 def hello():
     return jsonify({'message': 'Hello, World!'})
 
+file_path = None
+
 # UPLOAD DATASET
 print("Current working directory:", os.getcwd())
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'dataset')
 # ALLOWED_EXTENSIONS = {'zip', 'tar', 'tar.gz', '.jpeg', '.jpg', '.png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['CURRENT_IMAGE_FOLDER'] = CURRENT_IMAGE_FOLDER
+# app.config['CURRENT_IMAGE_FOLDER'] = CURRENT_IMAGE_FOLDER
 
 # def allowed_file(filename):
 #     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload_dataset', methods=['POST'])
+@app.route('/upload_dataset', methods=['GET','POST' , 'DELETE'])
 def uploadDataset():
-    print(request.files)
+    global file_path
+    # print(request.files)
     if 'file' not in request.files:
         resp = jsonify({
             "message": 'No file part in the request',
             "status": 'success'
         })
-        resp.status_code = 400
-        return resp   
-    
-    file = request.files['file']
-    if file.filename == '':
+    elif request.files['file'].filename == '':
         resp = jsonify({
             "message": 'No file selected for uploading',
             "status": 'success'
         })
         resp.status_code = 400
-        return resp
     else:
     # if file and allowed_file(file.filename):
+        file = request.files['file']
         filename = secure_filename(file.filename)
         file_path = os.path.join(BASE_DIR, 'dataset', filename)
         print("Saving file to:", file_path)
@@ -60,43 +59,44 @@ def uploadDataset():
             "message": 'Files successfully uploaded',
             "status": 'success'
         })
-        return resp
-    return jsonify({'error': 'No selected file'})
+    
+    return resp
+    # return jsonify({'error': 'No selected file'})
+
+
+@app.route('/upload_multidata', methods = ['POST'])
+def upload_multidata():
+    try:
+        if "files[]" not in request.files:
+            return jsonify({"message": "No files part in the request"}), 400
+
+        files = request.files.getlist("files[]")
+
+        if not files:
+            return jsonify({"message": "No files selected for uploading"}), 400
+
+        # Ganti nama folder upload menjadi UPLOAD_DATASET
+        folder_path = os.path.join(app.config["UPLOAD_DATASET"], "uploaded_dataset")
+        os.makedirs(folder_path, exist_ok=True)
+
+        for file in files:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(folder_path, filename)
+            file.save(file_path)
+
+        return jsonify({"message": "Files successfully uploaded", "folder_path": folder_path})
+    except Exception as error:
+        return jsonify({"message": f"Error during upload: {str(error)}"}), 500
+
 
 
 @app.route('/process_and_compare', methods=['POST'])
 def process_and_compare():
-    if 'file' not in request.files:
-        resp = jsonify({
-            "message": 'No file part in the request',
-            "status": 'success'
-        })
-        resp.status_code = 400
-        return resp   
+    global file_path
     
-    file = request.files['file']
-    if file.filename == '':
-        resp = jsonify({
-            "message": 'No file selected for processing',
-            "status": 'success'
-        })
-        resp.status_code = 400
-        return resp
-    else:
-        # Implement your image processing and comparison logic here
-        # Use the uploaded image directly, no need for a separate "current image"
-        filename = secure_filename(file.filename)
-        current_image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        
-        # Implement your image processing and comparison logic here using current_image_path
-        # ...
+    return 0
+# # @app.route('/post/<int')
 
-        resp = jsonify({
-            "message": 'Image processed and compared successfully',
-            "status": 'success'
-        })
-        return resp
-# @app.route('/post/<int')
 
 
     

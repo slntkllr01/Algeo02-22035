@@ -19,7 +19,6 @@ const UploadDataset: React.FC = () => {
         
 
         reader.readAsDataURL(file);
-        // setSelectedFile(event.target.files[0]);
       }
 
     };
@@ -53,20 +52,97 @@ const UploadDataset: React.FC = () => {
       }
     };
 
-    return(
-      <div className="m-4 items-center">
-        <label htmlFor="uploadImage">
-          <div id="display_image"  className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center" style={{ backgroundImage: `url(${uploadImage})` }}></div>
-          <input type="file" id="image" accept="image/png,image/jpg" onChange={handleFileChange} className="mt-4 p-4 text-center" />
-        </label>
-        <button
-          className="bg-blue-500 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
-          onClick={handleUpload} 
-        >
-          Insert Image
-        </button>
-        {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
+
+    const handleSearch = async () => {
+      try {
+        if (!selectedFile) {
+          console.error("No file selected!");
+          return;
+        }
+  
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+  
+        const response = await axios.post('http://localhost:5000/process_and_compare', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+  
+        // Menampilkan hasil perbandingan
+        console.log('Image comparison result:', response.data);
+      } catch (err) {
+        console.error('Error processing and comparing images:', err);
+      }
+    };
+
+    return (
+    <div className="m-4">
+      <label htmlFor="uploadImage" className="flex flex-col items-center">
+        <div
+          id="display_image"
+          className="border border-gray-300 h-64 w-64 bg-gray-100 rounded-lg flex items-center justify-center"
+          style={{
+            backgroundImage: `url(${uploadImage})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+        <div className="mt-8 items-center">
+          <form>
+          <input type="file" id="image" accept="image/png,image/jpg" onChange={handleFileChange} className="text-center" />
+          <button
+            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-600"
+            onClick={handleUpload} 
+          >
+            Insert Image
+          </button>
+          </form>
+        </div>
+      </label>
+      {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
+
+      <div className="m-4 flex flex-col items-center">
+          <button className="bg-blue-600 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
+          <input
+          type="file"
+          id="fileInputControl"
+          // @ts-ignore
+          webkitdirectory
+          multiple
+        />
+            Upload Dataset
+          </button>
+
+          <div className="flex flex-row gap-2 m-4 items-center">
+          <label>
+            Texture
+          </label>
+
+          <label htmlFor="check" className="bg-gray-300 cursor-pointer relative w-20 h-10 rounded-full">
+            <input type="checkbox" id="check" className="sr-only peer" />
+            <span className="w-2/5 h-4/5 bg-blue-300 absolute rounded-full left-1 top-1
+            peer-checked:bg-blue-500 peer-checked:left-11 transition-all duration-500"></span>
+          </label>
+
+          <label>
+            Color
+          </label>
+        </div>
+
+
+        <div className="m-4 items-center justify-center">
+          <button
+            className="bg-blue-600 text-white py-2 px-4 m-4 rounded hover:bg-blue-600"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
       </div>
+    </div>
+    
     );
 };
 

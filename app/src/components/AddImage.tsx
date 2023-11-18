@@ -6,6 +6,7 @@ import UploadImage from "./UploadImage";
 function AddImage() {
 
   const [message, setMessage] = useState('test');
+
   useEffect(() => {
     fetch('http://localhost:5000/time')
       .then((res) => res.json())
@@ -15,13 +16,29 @@ function AddImage() {
       });
   }, []);
 
+  // useEffect(() => {
+  //   // Contoh menggunakan Fetch API di JavaScript
+  //   const formData = new FormData();
+  //   formData.append('file1', File);
+  //   formData.append('file2', File);
+
+  //   fetch('http://localhost:5000/upload_multidata', {
+  //     method: 'POST',
+  //     body: formData,
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => console.log(data))
+  //     .catch(error => console.error('Error:', error));
+  // }, []);
+
+
   // const handleDrop = (acceptedFiles: File[]) => {
   //   console.log('Files dropped:', acceptedFiles);
   //   // Add any additional logic for handling dropped files
   // };
 
   return (
-    <div className="flex flex-row md:flex-col justify-evenly items-center mt-4 p-4 space-y-4 md:space-y-0 md:space-x-4">
+    <div className="flex flex-row md:flex-col justify-evenly items-center p-4 space-y-4 md:space-y-0 md:space-x-4">
       <div className="m-2">
         <p> Pukul :  {message}</p>
       </div>
@@ -41,7 +58,7 @@ function AddImage() {
         <UploadImage />
       </div>
 
-      <div className="m-4">
+      {/* <div className="m-4">
         <div className="flex flex-row gap-2 m-4 items-center">
           <label>
             Texture
@@ -76,7 +93,7 @@ function AddImage() {
       />
           Upload Dataset
         </button>
-      </div>
+      </div> */}
 
       {/* <div className="App">
         <h1>Folder Upload with Dropzone.js</h1>
