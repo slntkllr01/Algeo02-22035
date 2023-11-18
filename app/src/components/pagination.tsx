@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 
 interface CardComponentProps {
-  data: Array<{ title: string; description: string }>;
+  data: Array<{ percentage: string; imgpath: string }>;
 }
 
+
 function CardComponent({ data }: CardComponentProps) {
+
+  interface CardData {
+    percentage: number;
+    imgpath: string;
+  }
+  
+  const convertStringToCardProps = (jsonString: string): Array<CardData> => {
+    const data = JSON.parse(jsonString);
+    return data.map(([percentage, path]: [number, string]) => ({
+      title: `${percentage}%`,
+      description: path,
+    }));
+  };
+  
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,27 +74,25 @@ function CardComponent({ data }: CardComponentProps) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentData = data.slice(startIndex, endIndex);
-
+  
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {currentData.map((item, index) => (
-            <div key={index} className=" p-4 border rounded-lg shadow-lg w-[270px] h-[250px] relative">
-              <div className="h-[80%]">
-                {/* Tambahkan div kotak atau elemen lain di sini */}
-                <div className="bg-blue-400 w-full h-full flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">Foto</span>
-                </div>
-              </div>
-              <div className="h-[40%] p-4 flex flex-row">
-                <h2 className="text-xl font-semibold">{item.title}</h2>
-                <h2 className="text-xl font-semibold absolute right-7">50%</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {currentData.map((item, index) => (
+          <div key={index} className="p-4 border rounded-lg shadow-lg w-[200px] h-[220px]">
+            <div className="h-[83%]">
+              {/* Bagian Atas: Foto atau gambar */}
+              <div className="bg-blue-400 w-full h-full flex items-center justify-center">
+                <span className="text-white text-xl font-bold">{item.percentage}</span>
               </div>
             </div>
-          ))}
-        </div>
-      );
-      
-      
+            <div className="h-1/4 flex flex-col justify-center">
+              {/* Bagian Bawah: Teks */}
+              <h2 className="text-xl font-semibold text-center">{item.imgpath}</h2>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
