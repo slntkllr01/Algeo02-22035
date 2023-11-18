@@ -6,14 +6,9 @@ import traceback
 import os
 from werkzeug.utils import secure_filename
 from lib.CBIR.main import compareImage
-# from lib.CBIR.main import compareImage
 
 app = Flask(__name__)
 CORS(app)
-
-# print(sys.path)
-
-
 
 def format_result(result):
     formatted_result = []
