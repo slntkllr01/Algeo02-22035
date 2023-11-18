@@ -35,7 +35,7 @@ const MultiFileUpload: React.FC = () => {
         }
       });
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         const data = await response.data();
         setUploadMessage('Folder and its contents uploaded successfully.');
         setFolderPath(data.folder_path);
@@ -65,7 +65,8 @@ const MultiFileUpload: React.FC = () => {
           multiple
           className="border p-2"
         />
-        <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded"
+        >
           Upload
         </button>
         {uploadMessage && <p className="text-red-400 mt-2">{uploadMessage}</p>}

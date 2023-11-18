@@ -1,12 +1,32 @@
 import time
-from flask import Flask, jsonify, request, json
+import sys
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import traceback
 import os
 from werkzeug.utils import secure_filename
+from lib.CBIR.main import compareImage
+# from lib.CBIR.main import compareImage
 
 app = Flask(__name__)
 CORS(app)
+
+# print(sys.path)
+
+
+
+def format_result(result):
+    formatted_result = []
+    for item in result:
+        # Misalkan tuple berisi (nilai_similarity, file_path)
+        similarity, file_path = item
+        formatted_item = {
+            'similarity': similarity,
+            'file_path': file_path,
+        }
+        formatted_result.append(formatted_item)
+    return formatted_result
+
 
 @app.route('/')
 def welcome():
@@ -28,12 +48,9 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'dataset')
 # ALLOWED_EXTENSIONS = {'zip', 'tar', 'tar.gz', '.jpeg', '.jpg', '.png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-# app.config['CURRENT_IMAGE_FOLDER'] = CURRENT_IMAGE_FOLDER
 
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload_dataset', methods=['GET','POST' , 'DELETE'])
+@app.route('/upload_dataset', methods=['GET','POST'])
 def uploadDataset():
     global file_path
     # print(request.files)
@@ -89,17 +106,15 @@ def upload_multidata():
         return jsonify({"message": f"Error during upload: {str(error)}"}), 500
 
 
-
-@app.route('/process_and_compare', methods=['POST'])
+@app.route('/process_and_compare', methods=['GET'])
 def process_and_compare():
     global file_path
-    
-    return 0
-# # @app.route('/post/<int')
-
-
-
-    
+    file_path_temp = request.args.get('file_path', default=None, type=str)
+    if file_path_temp is None:
+        return jsonify({"error": "Parameter 'file_path' is required"}), 400
+    compare_values_to_display = compareImage(file_path_temp, "lib/CBIR/dataset")
+    formatted_result = format_result(compare_values_to_display)
+    return jsonify(formatted_result)
 
 if __name__ == '__main__':
   app.run(debug=True, port=5000)

@@ -24,6 +24,7 @@ def compareImage(reference_image_path,folder_path):
     # Initialize an array to store compareByTexture values
     compare_value = 0
     compare_values_to_display = []
+    sorted_compare_value_to_display = []
     start = time.time()
     for image_file in image_files:
         # Construct the full path to the image file
@@ -40,15 +41,17 @@ def compareImage(reference_image_path,folder_path):
         # Compare texture features and store the result in the array
         compare_value = compareByTexture(reference_features, current_features)
         if(compare_value>0.6):
+            compare_value*=100
             compare_values_to_display.append((compare_value,image_path))
-        
-    end = time.time()
-    print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
 
-    return  compare_values_to_display
+        # Urutkan compare_values_to_display berdasarkan nilai similarity (descending)
+        sorted_compare_value_to_display = sorted(compare_values_to_display, key=lambda x: x[0], reverse=True)
 
-print(compareImage( "lib/CBIR/0.jpg","lib/CBIR/datasetByTexture"))
+    # end = time.time()
+    # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
+    return  (sorted_compare_value_to_display)
 
+# print(compareImage( "lib/CBIR/0.jpg","lib/CBIR/datasetByTexture"))
 
 
 
