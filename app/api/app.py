@@ -6,7 +6,8 @@ import traceback
 import os
 from werkzeug.utils import secure_filename
 from algeo.CBIR.compare import *
-app = Flask(__name__)
+
+app = Flask(__name__, static_folder='static',static_url_path='/static')
 CORS(app)
 
 # print(sys.path)
@@ -42,6 +43,7 @@ def hello():
     return jsonify({'message': 'Hello, World!'})
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 file_path = os.path.join(BASE_DIR,'dataset')
 #image
 folder_path = os.path.join(BASE_DIR, 'uploaded_dataset')
@@ -58,7 +60,7 @@ app.config['UPLOAD_DATASET'] = UPLOAD_DATASET
 
 
 
-@app.route('/upload_dataset', methods=['GET','POST'])
+@app.route('/upload_dataset', methods=['POST'])
 def uploadDataset():
     global file_path
     # print(request.files)
@@ -77,9 +79,10 @@ def uploadDataset():
     # if file and allowed_file(file.filename):
         file = request.files['file']
         filename = secure_filename(file.filename)
-        file_path = os.path.join(BASE_DIR, 'dataset', filename)
+
+        file_path = os.path.join(BASE_DIR, 'static/dataset', filename)
         print("Saving file to:", file_path)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_path))
         resp = jsonify({
             "message": 'Files successfully uploaded',
             "status": 'success'
@@ -100,7 +103,7 @@ def upload_multidata():
             return jsonify({"message": "No files selected for uploading"}), 400
 
         # Ganti nama folder upload menjadi UPLOAD_DATASET
-        folder_path = os.path.join(BASE_DIR, "uploaded_dataset")
+        folder_path = os.path.join(BASE_DIR, "static/uploaded_dataset")
         os.makedirs(folder_path, exist_ok=True)
 
         for file in files:
@@ -122,9 +125,8 @@ def process_and_compare():
     compareType = request.args.get('compareType') 
     compare_values_to_display = None 
     results = []
-    compareType = 'Texture'
     file_path_temp = os.path.abspath('.')
-    file_path_temp = os.path.join(file_path_temp, 'dataset')
+    file_path_temp = os.path.join(file_path_temp, 'static/dataset')
     folder_path_temp = os.listdir(file_path_temp)
     # folder_path_temp = request.args.get(folder_path, default=None)
 
@@ -134,9 +136,11 @@ def process_and_compare():
     # buat pengkondisian jika button yang dipencet 'Color' nanti masuk ke fungsi compareByColor dan sebaliknya, lakukan, lakukan pengkondisian baru looping buat compare 
     for filename in folder_path_temp :
         if compareType == 'Texture':
-            compare_values_to_display = compareImageByTexture('dataset/'+filename, 'uploaded_dataset')
+            compare_values_to_display = compareImageByTexture('static/dataset/'+filename, 'static/uploaded_dataset')
         elif compareType == 'Color':
-            compare_values_to_display = compareImageByColor('dataset/'+filename, 'uploaded_dataset')
+            compare_values_to_display = compareImageByColor('static/dataset/'+filename, 'static/uploaded_dataset')
+        else :
+            print(compareType)
         # print(filename)
         # compare_values_to_display = compareImage("dataset/download_image_1698886305127.png", 'uploaded_dataset')
         if compare_values_to_display is not None:
@@ -146,7 +150,7 @@ def process_and_compare():
     if not results:
         return jsonify({'error': 'No valid results to display'})
     else:
-        return jsonify(results)
+        return jsonify(results[0])
 
 if __name__ == '__main__':
   app.run(debug=True, port=5000)

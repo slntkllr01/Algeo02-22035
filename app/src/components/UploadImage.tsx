@@ -35,6 +35,7 @@ const UploadDataset: React.FC = () => {
 
         const formData = new FormData();
         formData.append("file", selectedFile);
+        formData.append("compareType", compareType)
 
         console.log('Form Data:', formData);
 
@@ -57,34 +58,12 @@ const UploadDataset: React.FC = () => {
       setCompareType(type);
     };
     const handleCompareButtonClick = () => {
-      if (compareType === 'Texture') {
-      } else if (compareType === 'Color') {
-      }
+      setCompareType(compareType)
+
     };
 
 
-    const handleSearch = async () => {
-      try {
-        if (!selectedFile) {
-          console.error("No file selected!");
-          return;
-        }
-  
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-  
-        const response = await axios.post('http://localhost:5000/process_and_compare', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-  
-        // Menampilkan hasil perbandingan
-        console.log('Image comparison result:', response.data);
-      } catch (err) {
-        console.error('Error processing and comparing images:', err);
-      }
-    };
+    
 
     return (
     <div className="m-4">
@@ -119,32 +98,11 @@ const UploadDataset: React.FC = () => {
       </label>
       {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
 
-      <div className="m-4 flex flex-col items-center">
+      {/* <div className="m-4 flex flex-col items-center"> */}
 
-        <form method="post" encType="multipart/form-data" onSubmit={handleUpload}>
-          {/* <label htmlFor="folderInput" className="block text-lg font-semibold mb-2">
-            Select Folder to Upload:
-          </label> */}
-          {/* <input
-            type="file"
-            id="folderInput"
-            // @ts-ignore
-            webkitdirectory
-            directory
-            multiple
-            className="border p-2"
-            name="files[]"
-          /> */}
-          <input type="file" name="files[]" multiple />
-          {/* <input type="submit" value='Upload'  className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"/> */}
-          {/* <button type="submit" className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
-          >
-            Upload
-          </button> */}
-          {uploadMessage && <p className="text-red-400 mt-2">{uploadMessage}</p>}
-        </form>
+        
 
-        <div className="flex flex-row gap-2 m-4 items-center">
+        {/* <div className="flex flex-row gap-2 m-4 items-center">
           <label>
             Texture
           </label>
@@ -163,17 +121,17 @@ const UploadDataset: React.FC = () => {
               onClick={handleCompareButtonClick}
             />
           </label>
-        </div>
+        </div> */}
 
-        <div className="m-4 items-center justify-center">
+        {/* <div className="m-4 items-center justify-center">
           <button
             className="bg-blue-600 text-white py-2 px-4  rounded hover:bg-blue-600"
             onClick={handleSearch}
           >
             Search
           </button>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </div>
     
     );

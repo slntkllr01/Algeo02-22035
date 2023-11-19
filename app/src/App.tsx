@@ -7,6 +7,7 @@ import ParentComponent from './components/parentComponent';
 import MultiFileUpload from './components/MultiFileUpload';
 
 function App() {
+  const date= new Date()
   // const [processedCardData, setProcessedCardData] = useState([]);
 
   // const fetchData = async () => {
@@ -22,15 +23,20 @@ function App() {
   // useEffect(() => {
   //   fetchData();
   // }, []);
-
   return (
-    <div className="min-h-screen bg-blue-100">
+    <div className="min-h-screen bg-blue-100 items-center">
       <Title />
-      <div className="flex flex-col">
-        <AddImage />
+      <div className="flex flex-row items-center justify-center">
         {/* <CardComponent data={processedCardData} /> */}
-        <MultiFileUpload/>
+        <div className='flex flex-col items-center justify-center '>
+          <AddImage />
+          <MultiFileUpload/>
+        </div >
+        
         <ParentComponent/>
+      </div>
+      <div>
+        {/* <CardComponent data={dataDummy}/> */}
       </div>
     </div>
   );
