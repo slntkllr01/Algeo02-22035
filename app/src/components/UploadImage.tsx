@@ -110,18 +110,31 @@ const UploadDataset: React.FC = () => {
       {uploadMessage && <p className="text-red-400">{uploadMessage}</p>} 
 
       <div className="m-4 flex flex-col items-center">
-          <button className="bg-blue-600 text-white py-2 px-4 m-4 rounded hover:bg-blue-600">
-          <input
-          type="file"
-          id="fileInputControl"
-          // @ts-ignore
-          webkitdirectory
-          multiple
-        />
-            Upload Dataset
-          </button>
 
-          <div className="flex flex-row gap-2 m-4 items-center">
+        <form method="post" encType="multipart/form-data" onSubmit={handleUpload}>
+          {/* <label htmlFor="folderInput" className="block text-lg font-semibold mb-2">
+            Select Folder to Upload:
+          </label> */}
+          {/* <input
+            type="file"
+            id="folderInput"
+            // @ts-ignore
+            webkitdirectory
+            directory
+            multiple
+            className="border p-2"
+            name="files[]"
+          /> */}
+          <input type="file" name="files[]" multiple />
+          <input type="submit" value='Upload'  className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"/>
+          {/* <button type="submit" className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
+          >
+            Upload
+          </button> */}
+          {uploadMessage && <p className="text-red-400 mt-2">{uploadMessage}</p>}
+        </form>
+
+        <div className="flex flex-row gap-2 m-4 items-center">
           <label>
             Texture
           </label>
@@ -136,7 +149,6 @@ const UploadDataset: React.FC = () => {
             Color
           </label>
         </div>
-
 
         <div className="m-4 items-center justify-center">
           <button

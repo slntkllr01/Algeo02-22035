@@ -11,10 +11,8 @@ CORS(app)
 
 # print(sys.path)
 
-# from lib.CBIR.main import compareImage
-
-app = Flask(__name__)
-CORS(app)
+# app = Flask(__name__)
+# CORS(app)
 
 def format_result(result):
     formatted_result = []
@@ -128,8 +126,9 @@ def process_and_compare():
         return jsonify({"error": f"Parameter {folder_path} is required"}), 400
     for filename in folder_path_temp :
         # print(filename)
-    
         compare_values_to_display = compareImage('dataset/'+filename, 'uploaded_dataset')
+        # compare_values_to_display = compareImage("dataset/download_image_1698886305127.png", 'uploaded_dataset')
+
         formatted_result = format_result(compare_values_to_display)
     return jsonify(formatted_result)
 

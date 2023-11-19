@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios"; 
 
 
-const MultiFileUpload: React.FC = () => {
+const multiFileUpload: React.FC = () => {
   const [uploadMessage, setUploadMessage] = useState<string>('');
   const [folderPath, setFolderPath] = useState<string>('');
   const [uploadedPaths, setUploadedPaths] = useState<string[]>([]); 
@@ -82,7 +82,7 @@ const MultiFileUpload: React.FC = () => {
   );
 };
 
-export default MultiFileUpload;
+export default multiFileUpload;
 
 
 

@@ -6,7 +6,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # from PIL import Image
 
 # from .byTexture import getTextureFeatures,compareByTexture
-from .byTexture import*
+# from .byTexture import*
+from byTexture import*
 # import byColor as byColor
 # import byTexture as byTexture
 # from lib.CBIR.byTexture import *
@@ -57,7 +58,7 @@ def compareImage(reference_image_path,folder_path):
     # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
     return  (sorted_compare_value_to_display)
 
-# print(compareImage( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
+print(compareImage( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
 
 
 
