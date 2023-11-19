@@ -84,29 +84,51 @@ function Title() {
 
   const conceptPages = [
     <div>
-      <h3>Title 1</h3>
-      <img src="concept-image1.jpg" alt="Concept Image 1" />
-      <p>Page 1 content...</p>
+      <p> Program ini menggunakan skema temu balik gambar menggunakan Content-Based Image Retrieval baik dengan parameter warna maupun tekstur. Hal tersebut memanfaatkan konsep aljabar vektor.</p>
     </div>,
-    // ... tambahkan halaman-halaman lain sesuai kebutuhan
+    <div>
+      <h3>Contoh berdasarkan parameter warna</h3>
+      <img src={require("../assets/concept-image1.jpg")} alt="Concept 1" className='lg:w-1/2'/>
+    </div>,
+    <div>
+      <h3>Contoh berdasarkan parameter warna atau tekstur</h3>
+      <img src={require("../assets/concept-image-2.jpg")} alt="Concept 1" className='lg:w-1/2'/>
+    </div>,
   ];
 
   const usePages = [
     <div>
-      <h3>Title 1</h3>
-      <img src="use-image1.jpg" alt="Use Image 1" />
-      <p>Page 1 content...</p>
+      <h3>Upload gambar yang ingin kamu bandingkan</h3> 
+      <img src={require("../assets/use-image1.png")} alt="Use 1" />
+      <p>Jika berhasil, akan muncul pesan dan gambarmu akan tertera di placeholder gambar.</p>
     </div>,
-    // ... tambahkan halaman-halaman lain sesuai kebutuhan
+    <div>
+      <h3>Upload dataset gambar</h3>
+      <img src={require("../assets/use-image2.png")} alt="Use 2" />
+      <p>Tekan tombol Choose File dan pilih gambar-gambar dari folder gambar yang kamu ingin bandingkan</p>
+    </div>,
+    <div>
+      <h3>Pilih kamu ingin melakukan komparasi berdasarkan tekstur atau warna</h3>
+      <img src={require("../assets/use-image3.png")} alt="Use 3" />
+    </div>,
+    <div>
+      <p>Selanjutnya, klik tombol 'Search' dan kamu akan melihat hasil gambar-gambar dari datasetmu yang paling mirip</p>
+    </div>,
   ];
 
   const aboutUsPages = [
     <div>
-      <h3>Title 1</h3>
-      <img src="about-us-image1.jpg" alt="About Us Image 1" />
-      <p>Page 1 content...</p>
+      <h3>We are Melati, Shulha, and El...</h3>
+      <img src={require("../assets/about-us-image1.jpg")} alt="About Us 1" className='lg:w-1/2' />
     </div>,
-    // ... tambahkan halaman-halaman lain sesuai kebutuhan
+    <div>
+      <h3>We are struggling through this...</h3>
+      <img src={require("../assets/about-us-image3.jpg")} alt="About Us 1" className='lg:w-1/2' />
+    </div>,
+    <div>
+      <h3>We are doing our best...</h3>
+      <img src={require("../assets/about-us-image2.jpg")} alt="About Us 1" className='lg:w-1/2'/>
+    </div>,
   ];
 
   return (
@@ -124,7 +146,7 @@ function Title() {
           </li>
           <li>
             <button className="hover:text-gray-300 focus:outline-none" onClick={openUseModal}>
-              Use
+              How to Use
             </button>
           </li>
           <li>
@@ -139,7 +161,7 @@ function Title() {
       <Modal isOpen={conceptModalOpen} onClose={closeConceptModal} title="Concept" pages={conceptPages} maxPages={4} />
 
       {/* Modal untuk Use */}
-      <Modal isOpen={useModalOpen} onClose={closeUseModal} title="Use" pages={usePages} maxPages={4} />
+      <Modal isOpen={useModalOpen} onClose={closeUseModal} title="How to Use" pages={usePages} maxPages={4} />
 
       {/* Modal untuk About Us */}
       <Modal isOpen={aboutUsModalOpen} onClose={closeAboutUsModal} title="About Us" pages={aboutUsPages} maxPages={4} />
