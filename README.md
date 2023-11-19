@@ -14,14 +14,20 @@ ReactJS
 2. Mendapatkan gambar-gambar paling mirip dengan query image dengan perbandingan fitur tekstur
 
 ## Setup dan Penggunaan program
+Clone repository ini ke lokal anda
+<pre>
+https://github.com/slntkllr01/Algeo02-22035.git
+</pre>
+
 1. Buka folder src
 2. Buatlah virtual environment `venv` baru pada folder tersebut.
 3. Aktifkan virtual environment tersebut `venv/bin/activate` di Linux/OS X ataupun `venv\scripts\activate` pada Windows.
 4. Install dependensi yang diperlukan dengan `pip install -r requirements.txt`.
 5. Kemudian, dengan terminal code editor Anda, masuk ke direktori app dengan `cd app`
-6. Lalu bukalah website dengan `npm run start` untuk menjalankan program dari local browser
-7. Pada terminal lain, jalankan juga  `npm run start-api` agar program dapat digunakan
-8. Selamat mencoba!
+6. Pastikan anda telah menginstal npm atau dengan `npm install`
+7. Lalu bukalah website dengan `npm run start` untuk menjalankan program dari local browser
+8. Pada terminal lain, jalankan juga  `npm run start-api` agar program dapat digunakan
+9. Selamat mencoba!
    
 ## Cara Penggunaan Website
 Secara umum, berikut adalah cara umum penggunaan program:
