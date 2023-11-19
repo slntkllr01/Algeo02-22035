@@ -7,7 +7,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # from .byTexture import getTextureFeatures,compareByTexture
 # from .byTexture import*
-from byTexture import*
+from .byTexture import *
+from .byColor import *
 # import byColor as byColor
 # import byTexture as byTexture
 # from lib.CBIR.byTexture import *
@@ -19,8 +20,45 @@ from byTexture import*
 # reference_image_path = "lib/CBIR/0.jpg" 
 # folder_path = "lib/CBIR/datasetByTexture" 
 
+def compareImageByColor(reference_image_path, folder_path):
+    reference_image = cv2.imread(reference_image_path)
+    reference_image = cv2.resize(reference_image, (256, 256))
+    reference_features = CBIRbyColor(reference_image)
 
-def compareImage(reference_image_path,folder_path):
+    # Get the list of files in the folder
+    image_files = [f for f in os.listdir(folder_path)]
+
+    # Initialize an array to store compareByTexture values
+    compare_value = 0
+    compare_values_to_display = []
+    sorted_compare_value_to_display = []
+    # start = time.time()
+    for image_file in image_files:
+        # Construct the full path to the image file
+        image_path = os.path.join(folder_path, image_file)
+        print(image_path)
+
+        # Read the current image
+        current_image = cv2.imread(image_path)
+        current_image = cv2.resize(current_image, (256, 256))
+
+        # Get texture features for the current image
+        current_features = CBIRbyColor(current_image)
+
+        # Compare texture features and store the result in the array
+        compare_value = CosineSimilarity(reference_features, current_features)
+        if(compare_value>0.6):
+            compare_value*=100
+            compare_values_to_display.append((compare_value,image_path))
+
+        # Urutkan compare_values_to_display berdasarkan nilai similarity (descending)
+        sorted_compare_value_to_display = sorted(compare_values_to_display, key=lambda x: x[0], reverse=True)
+
+    # end = time.time()
+    # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
+    return  (sorted_compare_value_to_display)
+
+def compareImageByTexture(reference_image_path,folder_path):
     reference_image = cv2.imread(reference_image_path)
     reference_image = cv2.resize(reference_image, (256, 256))
     reference_features = getTextureFeatures(reference_image)
@@ -46,7 +84,7 @@ def compareImage(reference_image_path,folder_path):
         current_features = getTextureFeatures(current_image)
 
         # Compare texture features and store the result in the array
-        compare_value = compareByTexture(reference_features, current_features)
+        compare_value = CosineSimilarity(reference_features, current_features)
         if(compare_value>0.6):
             compare_value*=100
             compare_values_to_display.append((compare_value,image_path))
@@ -58,7 +96,7 @@ def compareImage(reference_image_path,folder_path):
     # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
     return  (sorted_compare_value_to_display)
 
-print(compareImage( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
+print(compareImageByTexture( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
 
 
 

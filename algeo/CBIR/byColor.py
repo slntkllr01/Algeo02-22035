@@ -41,12 +41,12 @@ def CBIRbyColor(path):
     image_height, image_width = H.shape
 
     # Ukuran blok yang diinginkan (disesuaikan dengan partisi 3x3)
-    desired_block_size = image_height // 3  # Ukuran blok yang akan dipartisi
+    desired_block_size = image_height // 4  # Ukuran blok yang akan dipartisi
 
     # Loop untuk membagi gambar menjadi blok 3x3 dan menghitung histogram warna
     histograms = []
-    for i in range(3):
-        for j in range(3):
+    for i in range(4):
+        for j in range(4):
             # Tentukan koordinat awal dan akhir untuk blok saat ini
             start_row = i * desired_block_size
             end_row = start_row + desired_block_size

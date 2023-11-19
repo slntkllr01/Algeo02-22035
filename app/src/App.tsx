@@ -5,24 +5,8 @@ import AddImage from './components/AddImage';
 import CardComponent from './components/pagination';
 
 function App() {
-  const data = [
-    { title: 'Item 1', description: 'Description 1' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-    { title: 'Item 2', description: 'Description 2' },
-        { title: 'Item 2', description: 'Description 2' },
-    
-  ];
 
-  
-  const [iniitalCardData, setCardData] = useState([]);
+  const [CardData, setCardData] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -55,7 +39,7 @@ function App() {
 
 
   return (
-    <div className="m-8 min-h-screen bg-blue-100">
+    <div className="min-h-screen bg-blue-100">
       <Title />
       <div className="flex flex-row">
         <AddImage />

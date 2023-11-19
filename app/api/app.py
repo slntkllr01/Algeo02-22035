@@ -5,7 +5,7 @@ from flask_cors import CORS
 import traceback
 import os
 from werkzeug.utils import secure_filename
-from algeo.CBIR.compare import compareImage
+from algeo.CBIR.compare import compareImageByTexture
 app = Flask(__name__)
 CORS(app)
 
@@ -126,7 +126,7 @@ def process_and_compare():
         return jsonify({"error": f"Parameter {folder_path} is required"}), 400
     for filename in folder_path_temp :
         # print(filename)
-        compare_values_to_display = compareImage('dataset/'+filename, 'uploaded_dataset')
+        compare_values_to_display = compareImageByTexture('dataset/'+filename, 'uploaded_dataset')
         # compare_values_to_display = compareImage("dataset/download_image_1698886305127.png", 'uploaded_dataset')
 
         formatted_result = format_result(compare_values_to_display)

@@ -274,7 +274,7 @@ def getTextureFeatures(ImageMatrix):
     featuresTemp = [getContrast(GLCM), getDissimilarity(GLCM), getHomogeneity(GLCM), getASM(GLCM), getEnergy(GLCM), getEntropy(GLCM), getColleration(GLCM)]
     return featuresTemp
 
-def compareByTexture(Texture1, Texture2):
+def CosineSimilarity(Texture1, Texture2):
     cosineSimilarity = 0
     dot_product = 0
     normA = 0
