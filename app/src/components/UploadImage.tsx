@@ -5,6 +5,7 @@ const UploadDataset: React.FC = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [uploadMessage, setUploadMessage] = useState<string | null>(null);
     const [uploadImage, setUploadImage] = useState<string | null>(null);
+    const [compareType, setCompareType] = useState<string>('Texture');
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
       const reader = new FileReader();
@@ -49,6 +50,15 @@ const UploadDataset: React.FC = () => {
       }
       catch(err){
         console.error(err);
+      }
+    };
+
+    const handleCompareTypeChange = (type : string) => {
+      setCompareType(type);
+    };
+    const handleCompareButtonClick = () => {
+      if (compareType === 'Texture') {
+      } else if (compareType === 'Color') {
       }
     };
 
@@ -126,7 +136,7 @@ const UploadDataset: React.FC = () => {
             name="files[]"
           /> */}
           <input type="file" name="files[]" multiple />
-          <input type="submit" value='Upload'  className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"/>
+          {/* <input type="submit" value='Upload'  className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"/> */}
           {/* <button type="submit" className= "bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
           >
             Upload
@@ -147,6 +157,11 @@ const UploadDataset: React.FC = () => {
 
           <label>
             Color
+            <input
+              type="button"
+              value="Compare"
+              onClick={handleCompareButtonClick}
+            />
           </label>
         </div>
 

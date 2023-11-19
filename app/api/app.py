@@ -5,7 +5,7 @@ from flask_cors import CORS
 import traceback
 import os
 from werkzeug.utils import secure_filename
-from algeo.CBIR.compare import compareImageByTexture
+from algeo.CBIR.compare import *
 app = Flask(__name__)
 CORS(app)
 
@@ -15,6 +15,8 @@ CORS(app)
 # CORS(app)
 
 def format_result(result):
+    if result is None:
+        return jsonify({'error': 'Comparison result is None'})
     formatted_result = []
     for item in result:
         # Misalkan tuple berisi (nilai_similarity, file_path)
@@ -98,7 +100,7 @@ def upload_multidata():
             return jsonify({"message": "No files selected for uploading"}), 400
 
         # Ganti nama folder upload menjadi UPLOAD_DATASET
-        folder_path = os.path.join(UPLOAD_DATASET, "uploaded_dataset")
+        folder_path = os.path.join(BASE_DIR, "uploaded_dataset")
         os.makedirs(folder_path, exist_ok=True)
 
         for file in files:
@@ -117,6 +119,10 @@ def upload_multidata():
 def process_and_compare():
     global folder_path
     global file_path
+    compareType = request.args.get('compareType') 
+    compare_values_to_display = None 
+    results = []
+    compareType = 'Texture'
     file_path_temp = os.path.abspath('.')
     file_path_temp = os.path.join(file_path_temp, 'dataset')
     folder_path_temp = os.listdir(file_path_temp)
@@ -124,13 +130,23 @@ def process_and_compare():
 
     if file_path_temp is None or folder_path_temp is None:
         return jsonify({"error": f"Parameter {folder_path} is required"}), 400
-    for filename in folder_path_temp :
-        # print(filename)
-        compare_values_to_display = compareImageByTexture('dataset/'+filename, 'uploaded_dataset')
-        # compare_values_to_display = compareImage("dataset/download_image_1698886305127.png", 'uploaded_dataset')
 
-        formatted_result = format_result(compare_values_to_display)
-    return jsonify(formatted_result)
+    # buat pengkondisian jika button yang dipencet 'Color' nanti masuk ke fungsi compareByColor dan sebaliknya, lakukan, lakukan pengkondisian baru looping buat compare 
+    for filename in folder_path_temp :
+        if compareType == 'Texture':
+            compare_values_to_display = compareImageByTexture('dataset/'+filename, 'uploaded_dataset')
+        elif compareType == 'Color':
+            compare_values_to_display = compareImageByColor('dataset/'+filename, 'uploaded_dataset')
+        # print(filename)
+        # compare_values_to_display = compareImage("dataset/download_image_1698886305127.png", 'uploaded_dataset')
+        if compare_values_to_display is not None:
+            formatted_result = format_result(compare_values_to_display)
+            results.append(formatted_result)
+    
+    if not results:
+        return jsonify({'error': 'No valid results to display'})
+    else:
+        return jsonify(results)
 
 if __name__ == '__main__':
   app.run(debug=True, port=5000)

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios"; 
 
 
-const multiFileUpload: React.FC = () => {
+const MultiFileUpload: React.FC = () => {
   const [uploadMessage, setUploadMessage] = useState<string>('');
   const [folderPath, setFolderPath] = useState<string>('');
   const [uploadedPaths, setUploadedPaths] = useState<string[]>([]); 
@@ -62,7 +62,6 @@ const multiFileUpload: React.FC = () => {
           id="folderInput"
           // @ts-ignore
           webkitdirectory
-          directory
           multiple
           className="border p-2"
         />
@@ -82,7 +81,7 @@ const multiFileUpload: React.FC = () => {
   );
 };
 
-export default multiFileUpload;
+export default MultiFileUpload;
 
 
 

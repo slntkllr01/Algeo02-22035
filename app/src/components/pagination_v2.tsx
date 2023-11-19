@@ -1,45 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-
 interface CardComponentProps {
   data: Array<{ file_path: string; similarity: number }>;
   totalItems: number;
   onPageChange: (page: number) => void;
 }
 
-
-function CardComponent({ data, totalItems,onPageChange }: CardComponentProps) {
-
-  interface CardData {
-    file_path : string;
-    similarity : number;
-
-  }
-  
-  const convertStringToCardProps = (jsonString: string): Array<CardData> => {
-    const data = JSON.parse(jsonString);
-    return data.map(([file_path, similarity]: [string, number]) => ({
-      title: `${similarity}%`,
-      description: file_path,
-    }));
-  };
-  
+function CardComponent2({ data, totalItems, onPageChange }: CardComponentProps) {
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [totalItems]);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      onPageChange(page);
     }
   };
-
-  // INI TAMBAHAN
-  
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [totalItems]);
 
   const generatePageNumbers = () => {
     const pageNumbers = [];
@@ -84,7 +66,7 @@ function CardComponent({ data, totalItems,onPageChange }: CardComponentProps) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentData = data.slice(startIndex, endIndex);
-  
+
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {currentData.map((item, index) => (
@@ -145,4 +127,4 @@ function CardComponent({ data, totalItems,onPageChange }: CardComponentProps) {
   );
 }
 
-export default CardComponent;
+export default CardComponent2;

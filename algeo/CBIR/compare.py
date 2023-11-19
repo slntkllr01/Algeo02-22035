@@ -74,7 +74,6 @@ def compareImageByTexture(reference_image_path,folder_path):
     for image_file in image_files:
         # Construct the full path to the image file
         image_path = os.path.join(folder_path, image_file)
-        print(image_path)
 
         # Read the current image
         current_image = cv2.imread(image_path)
@@ -96,7 +95,7 @@ def compareImageByTexture(reference_image_path,folder_path):
     # print("Time taken to compare", len(image_files), "images:", end - start, "seconds")
     return  (sorted_compare_value_to_display)
 
-print(compareImageByTexture( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
+# print(compareImageByTexture( "app/api/dataset/download_image_1698886305127.png","app/api/uploaded_dataset"))
 
 
 

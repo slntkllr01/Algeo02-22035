@@ -1,49 +1,36 @@
-// src/App.js
-import React, { useState, useEffect } from 'react';
+// src/App.tsx
+import React, { useEffect, useState } from 'react';
 import Title from './components/Title';
 import AddImage from './components/AddImage';
 import CardComponent from './components/pagination';
+import ParentComponent from './components/parentComponent';
+import MultiFileUpload from './components/MultiFileUpload';
 
 function App() {
+  // const [processedCardData, setProcessedCardData] = useState([]);
 
-  const [CardData, setCardData] = useState([]);
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5000/process_and_compare');
+  //     const data = await response.json();
+  //     setProcessedCardData(data);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/process_and_compare');
-      const data = await response.json();
-      setCardData(data)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  const cardData = [
-    {"percentage": '70', "imgpath": "image1.jpg"},
-    {"percentage": '85', "imgpath": "image2.jpg"},
-    {"percentage": '60', "imgpath": "image3.jpg"},
-    {"percentage": '70', "imgpath": "image1.jpg"},
-    {"percentage": '85', "imgpath": "image2.jpg"},
-    {"percentage": '60', "imgpath": "image3.jpg"},
-    {"percentage": '70', "imgpath": "image1.jpg"},
-    {"percentage": '85', "imgpath": "image2.jpg"},
-    {"percentage": '60', "imgpath": "image3.jpg"},
-    {"percentage": '70', "imgpath": "image1.jpg"},
-    {"percentage": '85', "imgpath": "image2.jpg"},
-    {"percentage": '60', "imgpath": "image3.jpg"},
-  ]
-
-  useEffect(() => {
-    fetchData(); // Panggil fetchData ketika komponen di-mount
-  }, []); // Parameter kedua berupa array kosong agar useEffect hanya dijalankan sekali saat komponen di-mount
-
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="min-h-screen bg-blue-100">
       <Title />
-      <div className="flex flex-row">
+      <div className="flex flex-col">
         <AddImage />
-        <CardComponent data={cardData} />
+        {/* <CardComponent data={processedCardData} /> */}
+        <MultiFileUpload/>
+        <ParentComponent/>
       </div>
     </div>
   );
